@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <script src="./report2.js"></script>
+  <link rel="stylesheet" href="./Report2.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+  <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+  <script src="https://zipaddr.github.io/bankautob.js" charset="UTF-8"></script>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <title>第２回レポート</title>
+</head>
+
+<body>
+  <div id="workersApp">
+    <header class="header">
+      <div class="sticky-top">
+        <nav class="navbar navbar-light bg-light">
+          <button v-on:click="changeSearchPage" v-if="search.show == 1" type="button" class="btn btn-outline-success">従業員を検索</button>
+          <button v-on:click="backPage" v-if="search.show == 2" class="btn btn-outline-success" type="button" id="button">◀️</button>
+          <button v-on:click="changeDispInfo" v-if="information.show == 1 && search.show == 1" type="button" class="btn btn-outline-primary">従業員情報一覧</button>
+          <button v-on:click="changeDispRegister" v-else-if="information.show == 2 && search.show == 1" type="button" class="btn btn-outline-primary">従業員の登録</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="page1" v-if="search.show == 1">
+        <div class="workerRegist" v-if="information.show == 1">
+          <h1 class="info">従業員情報を入力してください</h1>
+          <form>
+            <!-- 従業員情報入力フォーム -->
+            <div class="form-group">
+              <label for="name">名前</label>
+              <input type="text" class="form-control" id="name" placeholder="名前" v-model="inputName">
+            </div>
+            <div>
+              <p>性別</p>
+              <label>男性</label>
+              <input type="radio" v-model="inputGender" value="男性">
+              <label>女性</label>
+              <input type="radio" v-model="inputGender" value="女性">
+              <label>その他</label>
+              <input type="radio" v-model="inputGender" value="その他">
+            </div>
+            <div>
+              <p>年齢</p>
+              <input type="text" v-model="inputAge" size="6">
+            </div>
+            <br>
+            <div class="form-group">
+              <p>雇用形態</p>
+              <label>正社員</label>
+              <input type="radio" v-model="inputPosition" value="正社員">
+              <label>契約社員</label>
+              <input type="radio" v-model="inputPosition" value="契約社員">
+              <label>派遣社員</label>
+              <input type="radio" v-model="inputPosition" value="派遣社員">
+              <label>パートタイマー</label>
+              <input type="radio" v-model="inputPosition" value="パートタイマー">
+            </div>
+            <div class="form-number">
+              <p>電話番号(ハイフンなし)</p>
+              <input type="tel" name="tel01" size="30" maxlength="50" v-model="inputNumber">
+              <p>緊急連絡先(ハイフンなし)</p>
+              <input type="tel" name="tel01" size="30" maxlength="50" v-model="inputEmergencyNumber">
+            </div>
+            <br>
+            <div class="form-address">
+              <label>住所 ※番地・部屋番号などを忘れずに</label><br>
+              <input type="text" name="zip11" size="17" placeholder="郵便番号(ハイフンなし)" maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','addr11','addr11');" v-model="inputPostalcode">
+              <input type="text" name="addr11" size="60" v-model="inputAddress">
+            </div>
+            <div class="form-bank">
+              <p>銀行口座情報</p>
+              <label>銀行名</label>
+              <input type="text" placeholder="銀行名" v-model="inputBankName">
+              <label>支店名</label>
+              <input type="text" placeholder="支店名" v-model="inputBranchName">
+              <p>口座種別</p>
+              <label>普通預金</label>
+              <input type="radio" v-model="inputBankAccount" value="普通預金">
+              <label>当座預金</label>
+              <input type="radio" v-model="inputBankAccount" value="当座預金">
+              <label>定期預金</label>
+              <input type="radio" v-model="inputBankAccount" value="定期預金">
+              <p>口座番号</p>
+              <input type="text" placeholder="口座番号" v-model="inputBankNumber">
+            </div><br>
+            <div class="form-additional">
+              <p>特記事項(なければ”なし”と入力)</p>
+              <textarea type="text" cols="80" rows="5" v-model="inputAdditional" size="100"></textarea>
+            </div>
+            <br>
+            <div><button type="button" class="btn btn-secondary" v-on:click="sendInfo">登録</button></div>
+          </form>
+          <br>
+          <hr>
+        </div>
+        <div class="workersInfo" v-else-if="information.show == 2">
+          <h1 class="info">従業員情報一覧</h1>
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th>ID</th>
+                <th>名前</th>
+                <th>性別</th>
+                <th>雇用形態</th>
+                <th>電話番号</th>
+                <th>住所</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="worker in workers">
+                <td>{{ worker.id }}</td>
+                <td>{{ worker.name }}</td>
+                <td>{{ worker.gender }}</td>
+                <td>{{ worker.position }}</td>
+                <td>{{ worker.number }}</td>
+                <td>{{ worker.address}}</td>
+              </tr>
+            </tbody>
+            <br><br>
+          </table>
+          <br><br>
+        </div>
+      </div>
+
+      <div class="page2" v-else-if="search.show == 2">
+        <h1>従業員を検索</h1>
+        <input v-model="keyword" class="form-control" type="text" placeholder="検索する名前を入力">
+        <br>
+        <hr>
+        <table class="table table-sm-responsive">
+
+          <thead class="thead-dark">
+            <tr>
+              <th>ID</th>
+              <th>名前</th>
+              <th>性別</th>
+              <th>年齢</th>
+              <th>雇用形態</th>
+              <th>住所</th>
+              <th>電話番号</th>
+              <th>緊急連絡先</th>
+              <th>銀行名</th>
+              <th>支店名</th>
+              <th>口座種別</th>
+              <th>口座番号</th>
+              <th>備考</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="worker in filterWorkers">
+              <td v-text="worker.id"></td>
+              <td v-text="worker.name"></td>
+              <td v-text="worker.gender"></td>
+              <td v-text="worker.age"></td>
+              <td v-text="worker.position"></td>
+              <td v-text="worker.address"></td>
+              <td v-text="worker.number"></td>
+              <td v-text="worker.emergencynumber"></td>
+              <td v-text="worker.bankname"></td>
+              <td v-text="worker.branchname"></td>
+              <td v-text="worker.bankaccount"></td>
+              <td v-text="worker.banknumber"></td>
+              <td v-text="worker.additional"></td>
+            </tr>
+          </tbody>
+        </table>
+        <br><br>
+      </div>
+    </main>
+
+    <footer class="fixed-bottom">
+      <nav class="navbar fixed-bottom navbar-dark bg-primary">
+        <a class="navbar-brand" href="#!">Senshu inc.</a>
+      </nav>
+    </footer>
+  </div>
+</body>
+
+</html>

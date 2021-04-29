@@ -1,0 +1,79 @@
+{
+  "workers": [
+    {
+      "id": 1,
+      "name": "江川明哉",
+      "gender": "男性",
+      "age": "20",
+      "position": "社長",
+      "address": "神奈川県川崎市多摩区東生田２丁目１−１",
+      "number": "0449111239",
+      "emergencynumber": "0449111239",
+      "bankname": "せんしう銀行",
+      "branchname": "生田支店",
+      "bankaccount": "普通預金",
+      "banknumber": "123456789",
+      "additional": "これは社長のダミーデータです"
+    },
+    {
+      "name": "専修太郎",
+      "gender": "男性",
+      "age": "25",
+      "position": "正社員",
+      "address": "神奈川県川崎市多摩区東三田1-1-1",
+      "number": "09012345678",
+      "emergencynumber": "09034567891",
+      "bankname": "せんしう銀行",
+      "branchname": "さかみち支店",
+      "bankaccount": "普通預金",
+      "banknumber": "1234567",
+      "additional": "なし",
+      "id": 2
+    },
+    {
+      "name": "山田はなこ",
+      "gender": "女性",
+      "age": "30",
+      "position": "派遣社員",
+      "address": "神奈川県茅ヶ崎市下寺尾1-1-1",
+      "number": "046712345678",
+      "emergencynumber": "046612345678",
+      "bankname": "かながわ銀行",
+      "branchname": "しょうなん支店",
+      "bankaccount": "普通預金",
+      "banknumber": "23456789",
+      "additional": "なし",
+      "id": 3
+    },
+    {
+      "name": "斎藤邦子",
+      "gender": "女性",
+      "age": "40",
+      "position": "パートタイマー",
+      "address": "神奈川県川崎市多摩区東三田1-1-1",
+      "number": "07012345678",
+      "emergencynumber": "09012345678",
+      "bankname": "せんしう銀行",
+      "branchname": "くだりざか支店",
+      "bankaccount": "普通預金",
+      "banknumber": "5678432",
+      "additional": "なし",
+      "id": 4
+    },
+    {
+      "name": "ネコ",
+      "gender": "その他",
+      "age": "3",
+      "position": "正社員",
+      "address": "なし",
+      "number": "なし",
+      "emergencynumber": "なし",
+      "bankname": "なし",
+      "branchname": "なし",
+      "bankaccount": "",
+      "banknumber": "なし",
+      "additional": "ペットのネコです。",
+      "id": 5
+    }
+  ]
+}
